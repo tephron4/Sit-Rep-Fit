@@ -107,7 +107,12 @@ public class GetWorkout {
 
     private final Workout[] workouts = {
         new Workout("push-ups", Workout.WorkoutType.REPS),
-        new Workout("planks", Workout.WorkoutType.TIMED)
+        new Workout("planks", Workout.WorkoutType.TIMED),
+        new Workout("sit-ups", Workout.WorkoutType.REPS),
+        new Workout("crunches", Workout.WorkoutType.REPS),
+        new Workout("wall-sit", Workout.WorkoutType.TIMED),
+        new Workout("lunges", Workout.WorkoutType.REPS),
+        new Workout("squats", Workout.WorkoutType.REPS)
     };
 
     private final Scanner scanner;
