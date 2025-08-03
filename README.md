@@ -1,6 +1,10 @@
 # Sit-Rep-Fit
 Stay active while gaming. This program is meant to help the user stay active while playing video games, with small workouts to do based on your in-game performance.
 
+## Running
+
+Run in a terminal with `java GetWorkout.java`.
+
 ## Workouts
 
 The workouts are simple, not requiring any extra equipment, and are either time or repitition based.
