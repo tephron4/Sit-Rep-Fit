@@ -46,3 +46,7 @@ application {
     // Define the main class for the application.
     mainClass = "workout_processing.GetWorkout"
 }
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}

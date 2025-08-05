@@ -186,7 +186,7 @@ public class GetWorkout {
     private void printGoodbye() {
         int totalGames = this.winCounter + this.lossCounter;
         float winPercentage = ((float) this.winCounter / totalGames) * 100;
-        float kdr = (this.killCounter / (this.deathCounter == 0 ? 1 : this.deathCounter));
+        float kdr = ((float) this.killCounter / (this.deathCounter == 0 ? 1 : this.deathCounter));
 
         System.out.println("\n\n\n\n");
         System.out.println("======================================");
@@ -215,6 +215,10 @@ public class GetWorkout {
          * Get win/loss outcome
          */
         System.out.println("\n\nHow'd the game go? (W/l)");
+
+        if (!this.scanner.hasNextLine()) {
+            throw new IllegalArgumentException("Please answer wiht W/l (Win or loss)");
+        }
 
         String outcome = this.scanner.nextLine();
 
