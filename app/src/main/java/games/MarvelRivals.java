@@ -1,8 +1,11 @@
+
 /**
  * Game class for Marvel Rivals.
- * 
+ *
  * @author Tobias Ephron
  */
+
+package games;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -10,11 +13,11 @@ import java.util.Map;
 
 public class MarvelRivals extends Game {
 
-    public MarvelRivals(String name, Timestamp endTime, Map<String, Object> statValues, boolean win) {
-        // Set the tracked stats
-        List<String> statList = List.of("kills", "deaths", "assists");
-        // TODO: Add other stats (i.e. final hits, damage, healing, damage blocked)
+    // Set the tracked stats
+    public static final List<String> statList = List.of("kills", "deaths", "assists");
+    // TODO: Add other stats (i.e. final hits, damage, healing, damage blocked)
 
+    public MarvelRivals(String name, Timestamp endTime, Map<String, Object> statValues, boolean win) {
         super(name, endTime, statList, statValues, win);
     }
 
