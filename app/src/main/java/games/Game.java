@@ -5,6 +5,8 @@
  * @author Tobias Ephron
  */
 
+package games;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;

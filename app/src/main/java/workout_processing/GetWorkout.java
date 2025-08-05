@@ -1,15 +1,18 @@
-
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
-
 /**
  * GetWorkout is the main class for getting the workout based on the user's
  * in-game performance.
  *
  * @author Tobias Ephron
  */
-// import java.util.Random;
+package workout_processing;
+
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorCompletionService;
+
 public class GetWorkout {
 
     public class Workout {
@@ -18,7 +21,6 @@ public class GetWorkout {
             REPS,
             TIMED
         }
-
         private final String name;
         private final WorkoutType type;
         private int count = 0;
@@ -58,7 +60,6 @@ public class GetWorkout {
             if (c < 0) {
                 throw new IllegalArgumentException("Count cannot be set to a negative number.");
             }
-
             this.count = switch (this.type) {
                 case REPS ->
                     c;
@@ -73,6 +74,15 @@ public class GetWorkout {
             System.out.print("Do " + this.name + " for " + this.count + " " + this.getTypeString());
         }
     }
+    private final Workout[] workouts = {
+        new Workout("push-ups", Workout.WorkoutType.REPS),
+        new Workout("planks", Workout.WorkoutType.TIMED),
+        new Workout("sit-ups", Workout.WorkoutType.REPS),
+        new Workout("crunches", Workout.WorkoutType.REPS),
+        new Workout("wall-sit", Workout.WorkoutType.TIMED),
+        new Workout("lunges", Workout.WorkoutType.REPS),
+        new Workout("squats", Workout.WorkoutType.REPS)
+    };
 
     private class GameResults {
 
@@ -105,16 +115,6 @@ public class GetWorkout {
         }
     }
 
-    private final Workout[] workouts = {
-        new Workout("push-ups", Workout.WorkoutType.REPS),
-        new Workout("planks", Workout.WorkoutType.TIMED),
-        new Workout("sit-ups", Workout.WorkoutType.REPS),
-        new Workout("crunches", Workout.WorkoutType.REPS),
-        new Workout("wall-sit", Workout.WorkoutType.TIMED),
-        new Workout("lunges", Workout.WorkoutType.REPS),
-        new Workout("squats", Workout.WorkoutType.REPS)
-    };
-
     private final Scanner scanner;
 
     public int winCounter;
@@ -142,14 +142,11 @@ public class GetWorkout {
     private Workout getWorkout(int deaths, boolean win) {
         // Calculate new workout count value
         int counter = deaths * (win ? 1 : 2);
-
         // Get a random workout
         Random random = new Random();
         Workout todo = workouts[random.nextInt(workouts.length)];
-
         // Set the new count and return the workout
         todo.setCount(counter);
-
         return todo;
     }
 
@@ -319,7 +316,6 @@ public class GetWorkout {
                 GameResults results = program.getGameResults();
 
                 Workout workoutTodo = program.getWorkout(results.getDeaths(), results.getWin());
-
                 System.out.println("\nHere's your workout:\n");
                 workoutTodo.printWorkout();
                 System.out.println("\n");
