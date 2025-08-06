@@ -21,6 +21,7 @@ public class GetWorkout {
             REPS,
             TIMED
         }
+
         private final String name;
         private final WorkoutType type;
         private int count = 0;
@@ -52,37 +53,29 @@ public class GetWorkout {
             }
         }
 
-        public int getCount() {
-            return this.count;
+        public int getCount() throws IllegalArgumentException {
+            return switch (this.type) {
+                case REPS ->
+                    this.count;
+                case TIMED ->
+                    this.count * 5;
+                default ->
+                    throw new IllegalArgumentException("Unknown workout type: " + this.type);
+            };
         }
 
         public void setCount(int c) throws IllegalArgumentException {
             if (c < 0) {
                 throw new IllegalArgumentException("Count cannot be set to a negative number.");
             }
-            this.count = switch (this.type) {
-                case REPS ->
-                    c;
-                case TIMED ->
-                    c * 5;
-                default ->
-                    throw new IllegalArgumentException("Unknown workout type: " + this.type);
-            };
+
+            this.count = c;
         }
 
         public void printWorkout() {
             System.out.print("Do " + this.name + " for " + this.count + " " + this.getTypeString());
         }
     }
-    private final Workout[] workouts = {
-        new Workout("push-ups", Workout.WorkoutType.REPS),
-        new Workout("planks", Workout.WorkoutType.TIMED),
-        new Workout("sit-ups", Workout.WorkoutType.REPS),
-        new Workout("crunches", Workout.WorkoutType.REPS),
-        new Workout("wall-sit", Workout.WorkoutType.TIMED),
-        new Workout("lunges", Workout.WorkoutType.REPS),
-        new Workout("squats", Workout.WorkoutType.REPS)
-    };
 
     private class GameResults {
 
@@ -116,6 +109,8 @@ public class GetWorkout {
     }
 
     private final Scanner scanner;
+    private Random random;
+    private List<Workout> workouts;
 
     public int winCounter;
     public int lossCounter;
@@ -123,8 +118,19 @@ public class GetWorkout {
     public int deathCounter;
     public int assistCounter;
 
-    public GetWorkout() {
+    public GetWorkout(Random random) {
         this.scanner = new Scanner(System.in);
+        this.random = random;
+
+        this.workouts = List.of(
+                new Workout("push-ups", Workout.WorkoutType.REPS),
+                new Workout("planks", Workout.WorkoutType.TIMED),
+                new Workout("sit-ups", Workout.WorkoutType.REPS),
+                new Workout("crunches", Workout.WorkoutType.REPS),
+                new Workout("wall-sit", Workout.WorkoutType.TIMED),
+                new Workout("lunges", Workout.WorkoutType.REPS),
+                new Workout("squats", Workout.WorkoutType.REPS));
+
         this.winCounter = 0;
         this.lossCounter = 0;
         this.killCounter = 0;
@@ -132,19 +138,22 @@ public class GetWorkout {
         this.assistCounter = 0;
     }
 
+    public List<Workout> getWorkouts() {
+        return this.workouts;
+    }
+
     /**
      * Get the workout to do based on the given stats and game-outcome.
      *
      * @param deaths amount of deaths
-     * @param win whether or not they won the game
+     * @param win    whether or not they won the game
      * @return the workout to do, with an updated count
      */
-    private Workout getWorkout(int deaths, boolean win) {
+    public Workout getWorkout(int deaths, boolean win) {
         // Calculate new workout count value
         int counter = deaths * (win ? 1 : 2);
         // Get a random workout
-        Random random = new Random();
-        Workout todo = workouts[random.nextInt(workouts.length)];
+        Workout todo = this.workouts.get(this.random.nextInt(this.workouts.size()));
         // Set the new count and return the workout
         todo.setCount(counter);
         return todo;
@@ -234,7 +243,8 @@ public class GetWorkout {
                 break;
             }
             default -> {
-                throw new IllegalArgumentException("Unknown game result: " + outcome + ". Please only answer with W or L (for win or loss)");
+                throw new IllegalArgumentException(
+                        "Unknown game result: " + outcome + ". Please only answer with W or L (for win or loss)");
             }
         }
 
@@ -311,7 +321,7 @@ public class GetWorkout {
     }
 
     public static void main(String[] args) {
-        GetWorkout program = new GetWorkout();
+        GetWorkout program = new GetWorkout(new Random());
 
         GetWorkout.printWelcome();
 
