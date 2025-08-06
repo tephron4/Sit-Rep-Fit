@@ -20,7 +20,7 @@ public class GetWorkoutTest {
         Random mockRandom = mock(Random.class);
 
         GetWorkout gw = new GetWorkout(mockRandom);
-        when(mockRandom.nextInt(gw.getWorkouts().size())).thenReturn(0); // returns pushups (REPS)
+        when(mockRandom.nextInt(gw.getWorkouts().size())).thenReturn(0); // returns push-ups (REPS)
         int deaths = 8;
 
         Workout winWorkout = gw.getWorkout(deaths, true);
@@ -39,5 +39,31 @@ public class GetWorkoutTest {
         Workout winWorkout = gw.getWorkout(deaths, true);
 
         assertEquals(deaths * 5, winWorkout.getCount(), "workout should have count of 40");
+    }
+
+    @Test
+    public void appGetsRepsWorkoutAfterLoss() {
+        Random mockRandom = mock(Random.class);
+
+        GetWorkout gw = new GetWorkout(mockRandom);
+        when(mockRandom.nextInt(gw.getWorkouts().size())).thenReturn(0); // returns push-ups (REPS)
+        int deaths = 7;
+
+        Workout lossWorkout = gw.getWorkout(deaths, false);
+
+        assertEquals(deaths * 2, lossWorkout.getCount(), "workout should have count of 14");
+    }
+
+    @Test
+    public void appGetsTimedWorkoutAfterLoss() {
+        Random mockRandom = mock(Random.class);
+
+        GetWorkout gw = new GetWorkout(mockRandom);
+        when(mockRandom.nextInt(gw.getWorkouts().size())).thenReturn(1); // returns planks (TIMED)
+        int deaths = 6;
+
+        Workout lossWorkout = gw.getWorkout(deaths, false);
+
+        assertEquals((deaths * 5) * 2, lossWorkout.getCount(), "workout should have count of 14");
     }
 }
