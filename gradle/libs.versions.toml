@@ -3,6 +3,8 @@
 
 [versions]
 guava = "33.4.6-jre"
+mockito = "5.14.0"
 
 [libraries]
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
+mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }

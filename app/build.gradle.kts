@@ -17,19 +17,18 @@ repositories {
     mavenCentral()
 }
 
+val mockitoAgent = configurations.create("mockitoAgent")
+
 dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
-}
 
-testing {
-    suites {
-        // Configure the built-in test suite
-        val test by getting(JvmTestSuite::class) {
-            // Use JUnit4 test framework
-            useJUnit("4.13.2")
-        }
-    }
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.13.4")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.13.4")
+    testImplementation("org.junit.platform:junit-platform-launcher:1.13.4")
+
+    testImplementation(libs.mockito)
+    mockitoAgent(libs.mockito) { isTransitive = false }
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -49,4 +48,14 @@ application {
 
 tasks.named<JavaExec>("run") {
     standardInput = System.`in`
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+}
+
+tasks {
+    test {
+        jvmArgs.add("-javaagent:${mockitoAgent.asPath}")
+    }
 }
