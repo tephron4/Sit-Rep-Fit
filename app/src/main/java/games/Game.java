@@ -14,33 +14,30 @@ import java.util.stream.Collectors;
 
 public abstract class Game {
 
-    protected final String name;
     protected final Timestamp endTime;
     protected List<String> stats;
     protected Map<String, Object> statValues;
     protected boolean win;
 
     public Game(
-            String name,
             Timestamp endTime,
             List<String> stats,
             Map<String, Object> statValues,
             boolean win) {
-        this.name = name;
         this.endTime = endTime;
         this.stats = stats;
-        
-        if (checkStatValues(statValues)) {}
+
+        if (!checkStatValues(statValues)) {
+            throw new IllegalArgumentException("Given statValues: " + statValues.toString()
+                    + " do not match the expected stats: " + this.stats.toString());
+        }
+        this.statValues = statValues;
 
         this.win = win;
     }
 
     private boolean checkStatValues(Map<String, Object> map) {
         return this.stats.size() == map.keySet().size() && this.stats.containsAll(map.keySet());
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public Timestamp getEndTime() {
@@ -68,6 +65,9 @@ public abstract class Game {
 
     /**
      * Calculate the number of reps of a workout to do for the game.
+     * 
+     * Each game will have it's own implementation to account for
+     * the different statistics and their differing importance.
      *
      * @return the number of reps
      */

@@ -17,8 +17,8 @@ public class MarvelRivals extends Game {
     public static final List<String> statList = List.of("kills", "deaths", "assists");
     // TODO: Add other stats (i.e. final hits, damage, healing, damage blocked)
 
-    public MarvelRivals(String name, Timestamp endTime, Map<String, Object> statValues, boolean win) {
-        super(name, endTime, statList, statValues, win);
+    public MarvelRivals(Timestamp endTime, Map<String, Object> statValues, boolean win) {
+        super(endTime, statList, statValues, win);
     }
 
     @Override
