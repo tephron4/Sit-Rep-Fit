@@ -64,6 +64,6 @@ public class GetWorkoutTest {
 
         Workout lossWorkout = gw.getWorkout(deaths, false);
 
-        assertEquals((deaths * 5) * 2, lossWorkout.getCount(), "workout should have count of 14");
+        assertEquals((deaths * 5) * 2, lossWorkout.getCount(), "workout should have count of 60");
     }
 }
