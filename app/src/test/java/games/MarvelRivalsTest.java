@@ -6,6 +6,7 @@
 
 package test.java.games;
 
+import games.Game;
 import games.MarvelRivals;
 
 import java.sql.Timestamp;
@@ -43,6 +44,31 @@ public class MarvelRivalsTest {
 
         assertThrows(IllegalArgumentException.class, () -> mr.calculateReps(),
                 "Negative deaths should cause an IllegalArgumentException");
+    }
 
+    @Test
+    public void constructor_shouldNotThrowException() {
+        Map<String, Object> statValues = Map.of("kills", 34, "deaths", 6, "assists", 11);
+
+        assertDoesNotThrow(() -> new MarvelRivals(Timestamp.from(Instant.now()), statValues, true));
+    }
+
+    @Test
+    public void constructorWithDiffLengthStatValues_throwsException() {
+        Map<String, Object> shortStatValues = Map.of("kills", 40, "assists", 13);
+        Map<String, Object> longStatValues = Map.of("kills", 40, "assists", 13, "deaths", 10, "extraStat", "fails");
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new MarvelRivals(Timestamp.from(Instant.now()), shortStatValues, true));
+        assertThrows(IllegalArgumentException.class,
+                () -> new MarvelRivals(Timestamp.from(Instant.now()), longStatValues, true));
+    }
+
+    @Test
+    public void constructorWithDiffStatValues_throwsExceptio() {
+        Map<String, Object> statValues = Map.of("kills", 40, "extraStat", "fails", "deaths", 10);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new MarvelRivals(Timestamp.from(Instant.now()), statValues, true));
     }
 }
