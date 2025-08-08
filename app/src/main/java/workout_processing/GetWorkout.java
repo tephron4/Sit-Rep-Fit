@@ -4,7 +4,11 @@
  *
  * @author Tobias Ephron
  */
+
 package workout_processing;
+
+import games.Game;
+import games.MarvelRivals;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -213,20 +217,15 @@ public class GetWorkout {
 
     }
 
-    // Gets the users game results through the terminal
-    private GameResults getGameResults() throws IllegalArgumentException {
-        int kills;
-        int deaths;
-        int assists;
-        boolean win;
-
+    // Gets the users game with stats through the terminal
+    private Game getGame() throws IllegalArgumentException {
         /**
          * Get win/loss outcome
          */
         System.out.println("\n\nHow'd the game go? (W/l)");
 
         if (!this.scanner.hasNextLine()) {
-            throw new IllegalArgumentException("Please answer wiht W/l (Win or loss)");
+            throw new IllegalArgumentException("Please answer with W/l (Win or loss)");
         }
 
         String outcome = this.scanner.nextLine();
