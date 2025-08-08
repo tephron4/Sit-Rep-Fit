@@ -1,9 +1,14 @@
 # Sit-Rep-Fit
 Stay active while gaming. This program is meant to help the user stay active while playing video games, with small workouts to do based on your in-game performance.
 
-## Running
-
-Run in a terminal with `java GetWorkout.java`.
+## Navigation
+* [Workouts](#workouts)
+  * [Supported Workouts](#supported-workouts)
+* [Supported Games](#supported-games)
+  * [Marvel Rivals](#marvel-rivals)
+* [Building and Testing](#building-and-testing)
+* [Running the CLI](#running-the-cli)
+* [Future Plans](#future-plans)
 
 ## Workouts
 
@@ -20,18 +25,37 @@ The workouts are simple, not requiring any extra equipment, and are either time 
 | lunges | reps |
 | squats | reps |
 
-## How it works <small>(last updated: Aug. 2, 2025)</small>
+## Supported Games
 
-The program will ask you the user if they won or lost the game. Then it will ask for the number or kills, deaths, and assists that the user got in the game. After collecting the games outcome and the in-game stats from the user, the program will print the workout that the user should do.
+> NOTE: For time based workouts, the length of time is five times the number of repititions calculated.
 
-### How the workout is determined
+### Marvel Rivals
+For Marvel Rivals, the program supports the basic statistics: kills, deaths, and assists.
 
-The workout is selected at random and the time (in seconds) or number of repititions is calculated based on the outcome of the game (win/loss) and the user's number of deaths.
+#### Rep Calculation
+- For a win: $\text{reps}=\text{deaths}$
+- For a loss: $\text{reps} = 2*\text{deaths}$
 
-If the user won the game, then the number of repititions of the workout to do will be equal to their number of deaths. If they lost, then the number will be doubled. 
+## Building and Testing
 
-#### NOTE: For time based workouts, the length of time is five times the number of repititions calculated.
+This program is built using Gradle and can be built with:
+```
+./gradlew clean build
+```
+> add `-x` flag to the end to not run tests when building
 
+Tests can be run using:
+```
+./gradlew test
+```
+> you can specify the test(s) to run with `--tests <path/to/test(s)>`
+
+## Running the CLI
+
+The program can be run directly in the terminal with:
+```
+./gradlew --console plain run
+```
 
 # Future Plans:
 
