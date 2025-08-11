@@ -90,12 +90,13 @@ public class GetGame {
 
         Map<String, Object> statValues = new HashMap<>();
         for (int i = 0; i < statNames.size(); i++) {
-            statValues.put(statNames.get(i), this.getStatValue(statNames.get(i), stats.get(i)));
+            statValues.put(statNames.get(i), this.getStatValue(statNames.get(i), stats.get(statNames.get(i))));
         }
 
         try {
-            return game.getConstructor(Timestamp.class, Map.class, boolean.class)
+            Game g = game.getConstructor(Timestamp.class, Map.class, boolean.class)
                     .newInstance(Timestamp.from(Instant.now()), statValues, win);
+            return g;
         } catch (Exception e) {
             return null;
         }

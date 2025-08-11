@@ -173,9 +173,9 @@ public class GetWorkout {
         System.out.println(" Games played: " + totalGames + "\n");
         System.out.println(" Wins: " + this.winCounter + "\n");
         System.out.println(" Losses: " + this.lossCounter + "\n");
-        System.out.println(" Win %: " + winPercentage + "%\n");
+        System.out.printf(" Win %%: %.2f%%%n\n", winPercentage);
         System.out.println(" KDA: " + this.killCounter + "/" + this.deathCounter + "/" + this.assistCounter + "\n");
-        System.out.println(" KDR: " + kdr + "\n");
+        System.out.printf(" KDR: %.2f%n\n", kdr);
         System.out.println("          See you next time!");
         System.out.println("======================================");
         System.out.println("\n\n\n\n");
@@ -205,6 +205,15 @@ public class GetWorkout {
         while (true) {
             try {
                 Game game = gg.getGame();
+                if (game.getWin()) {
+                    gw.winCounter++;
+                } else {
+                    gw.lossCounter++;
+                }
+
+                gw.killCounter += (Integer) game.getStatValue("kills");
+                gw.deathCounter += (Integer) game.getStatValue("deaths");
+                gw.assistCounter += (Integer) game.getStatValue("assists");
 
                 Workout workoutTodo = gw.getWorkout(game.calculateReps());
                 System.out.println("\nHere's your workout:\n");
@@ -218,6 +227,7 @@ public class GetWorkout {
             if (!gw.newGame()) {
                 break;
             }
+            System.out.println("\n\n");
         }
 
         gw.printGoodbye();

@@ -77,6 +77,14 @@ public abstract class Game {
         this.statValues.put(key, value);
     }
 
+    public boolean getWin() {
+        return this.win;
+    }
+
+    public void setWin(boolean w) {
+        this.win = w;
+    }
+
     /**
      * Calculate the number of reps of a workout to do for the game.
      * 
