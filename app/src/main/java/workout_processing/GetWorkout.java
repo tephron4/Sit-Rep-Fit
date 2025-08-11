@@ -13,6 +13,9 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorCompletionService;
 
+import games.Game;
+import main.java.workout_processing.GetGame;
+
 public class GetWorkout {
 
     public class Workout {
@@ -73,38 +76,7 @@ public class GetWorkout {
         }
 
         public void printWorkout() {
-            System.out.print("Do " + this.name + " for " + this.count + " " + this.getTypeString());
-        }
-    }
-
-    private class GameResults {
-
-        private final int kills;
-        private final int deaths;
-        private final int assists;
-        private final boolean win;
-
-        public GameResults(int kills, int deaths, int assists, boolean win) {
-            this.kills = kills;
-            this.deaths = deaths;
-            this.assists = assists;
-            this.win = win;
-        }
-
-        public int getKills() {
-            return this.kills;
-        }
-
-        public int getDeaths() {
-            return this.deaths;
-        }
-
-        public int getAssists() {
-            return this.assists;
-        }
-
-        public boolean getWin() {
-            return this.win;
+            System.out.print("Do " + this.getName() + " for " + this.getCount() + " " + this.getTypeString());
         }
     }
 
@@ -145,17 +117,14 @@ public class GetWorkout {
     /**
      * Get the workout to do based on the given stats and game-outcome.
      *
-     * @param deaths amount of deaths
-     * @param win    whether or not they won the game
+     * @param reps number of reps
      * @return the workout to do, with an updated count
      */
-    public Workout getWorkout(int deaths, boolean win) {
-        // Calculate new workout count value
-        int counter = deaths * (win ? 1 : 2);
+    public Workout getWorkout(int reps) {
         // Get a random workout
         Workout todo = this.workouts.get(this.random.nextInt(this.workouts.size()));
         // Set the new count and return the workout
-        todo.setCount(counter);
+        todo.setCount(reps);
         return todo;
     }
 
@@ -204,106 +173,13 @@ public class GetWorkout {
         System.out.println(" Games played: " + totalGames + "\n");
         System.out.println(" Wins: " + this.winCounter + "\n");
         System.out.println(" Losses: " + this.lossCounter + "\n");
-        System.out.println(" Win %: " + winPercentage + "%\n");
+        System.out.printf(" Win %%: %.2f%%%n\n", winPercentage);
         System.out.println(" KDA: " + this.killCounter + "/" + this.deathCounter + "/" + this.assistCounter + "\n");
-        System.out.println(" KDR: " + kdr + "\n");
+        System.out.printf(" KDR: %.2f%n\n", kdr);
         System.out.println("          See you next time!");
         System.out.println("======================================");
         System.out.println("\n\n\n\n");
 
-    }
-
-    // Gets the users game results through the terminal
-    private GameResults getGameResults() throws IllegalArgumentException {
-        int kills;
-        int deaths;
-        int assists;
-        boolean win;
-
-        /**
-         * Get win/loss outcome
-         */
-        System.out.println("\n\nHow'd the game go? (W/l)");
-
-        if (!this.scanner.hasNextLine()) {
-            throw new IllegalArgumentException("Please answer wiht W/l (Win or loss)");
-        }
-
-        String outcome = this.scanner.nextLine();
-
-        switch (outcome.toUpperCase().charAt(0)) {
-            case 'W' -> {
-                win = true;
-                this.wonGame();
-                break;
-            }
-            case 'L' -> {
-                win = false;
-                this.lostGame();
-                break;
-            }
-            default -> {
-                throw new IllegalArgumentException(
-                        "Unknown game result: " + outcome + ". Please only answer with W or L (for win or loss)");
-            }
-        }
-
-        /**
-         * Get kill count
-         */
-        System.out.println("\n\nHow many kills did you get? (integer value)");
-
-        while (true) {
-            try {
-                kills = this.scanner.nextInt();
-
-                if (kills >= 0) {
-                    this.killCounter += kills;
-                    break;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("\nPlease provide non-negative integer value: ");
-            }
-        }
-
-        /**
-         * Get death count
-         */
-        System.out.println("\n\nHow many deaths did you get? (integer value)");
-
-        while (true) {
-            try {
-                deaths = this.scanner.nextInt();
-
-                if (deaths >= 0) {
-                    this.deathCounter += deaths;
-                    break;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("\nPlease provide non-negative integer value: ");
-            }
-        }
-
-        /**
-         * Get Assist count
-         */
-        System.out.println("\n\nHow many assists did you get? (integer value)");
-
-        while (true) {
-            try {
-                assists = this.scanner.nextInt();
-                this.scanner.nextLine(); // Consume the leftover newline
-
-                if (assists >= 0) {
-                    this.assistCounter += assists;
-                    break;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("\nPlease provide non-negative integer value: ");
-            }
-        }
-
-        return new GameResults(kills, deaths, assists, win);
     }
 
     // Print a win message and add to the win counter
@@ -321,15 +197,25 @@ public class GetWorkout {
     }
 
     public static void main(String[] args) {
-        GetWorkout program = new GetWorkout(new Random());
+        GetWorkout gw = new GetWorkout(new Random());
+        GetGame gg = new GetGame(new Scanner(System.in));
 
         GetWorkout.printWelcome();
 
         while (true) {
             try {
-                GameResults results = program.getGameResults();
+                Game game = gg.getGame();
+                if (game.getWin()) {
+                    gw.winCounter++;
+                } else {
+                    gw.lossCounter++;
+                }
 
-                Workout workoutTodo = program.getWorkout(results.getDeaths(), results.getWin());
+                gw.killCounter += (Integer) game.getStatValue("kills");
+                gw.deathCounter += (Integer) game.getStatValue("deaths");
+                gw.assistCounter += (Integer) game.getStatValue("assists");
+
+                Workout workoutTodo = gw.getWorkout(game.calculateReps());
                 System.out.println("\nHere's your workout:\n");
                 workoutTodo.printWorkout();
                 System.out.println("\n");
@@ -338,11 +224,12 @@ public class GetWorkout {
                 continue;
             }
 
-            if (!program.newGame()) {
+            if (!gw.newGame()) {
                 break;
             }
+            System.out.println("\n\n");
         }
 
-        program.printGoodbye();
+        gw.printGoodbye();
     }
 }

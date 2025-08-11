@@ -8,28 +8,32 @@
 package games;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public abstract class Game {
 
     protected final Timestamp endTime;
-    protected List<String> stats;
     protected Map<String, Object> statValues;
     protected boolean win;
 
+    public Game() {
+        this.endTime = Timestamp.from(Instant.now());
+    }
+
     public Game(
             Timestamp endTime,
-            List<String> stats,
             Map<String, Object> statValues,
             boolean win) {
         this.endTime = endTime;
-        this.stats = stats;
 
         if (!checkStatValues(statValues)) {
             throw new IllegalArgumentException("Given statValues: " + statValues.toString()
-                    + " do not match the expected stats: " + this.stats.toString());
+                    + " do not match the expected stats: " + getStatNames().toString());
         }
         this.statValues = statValues;
 
@@ -37,15 +41,21 @@ public abstract class Game {
     }
 
     private boolean checkStatValues(Map<String, Object> map) {
-        return this.stats.size() == map.keySet().size() && this.stats.containsAll(map.keySet());
+        if (getStatNames().size() == map.keySet().size() && getStatNames().containsAll(map.keySet())) {
+            Map<String, Class> typesMap = getStats();
+            for (Entry entry : map.entrySet()) {
+                if (typesMap.get(entry.getKey()) != entry.getValue().getClass()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        return false;
     }
 
     public Timestamp getEndTime() {
         return this.endTime;
-    }
-
-    public List<String> getStats() {
-        return this.stats;
     }
 
     public Map<String, Object> getStatValues() {
@@ -59,8 +69,20 @@ public abstract class Game {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    public Object getStatValue(String key) {
+        return this.statValues.get(key);
+    }
+
     public void setStatValue(String key, Object value) {
         this.statValues.put(key, value);
+    }
+
+    public boolean getWin() {
+        return this.win;
+    }
+
+    public void setWin(boolean w) {
+        this.win = w;
     }
 
     /**
@@ -72,4 +94,20 @@ public abstract class Game {
      * @return the number of reps
      */
     public abstract int calculateReps();
+
+    /**
+     * Function for getting the map of stats to their
+     * respective types.
+     * 
+     * @return a map of stats to their respective types
+     */
+    public abstract Map<String, Class> getStats();
+
+    /**
+     * Function for getting the list of stats supported for
+     * a Game class.
+     * 
+     * @return a list of the supported stats for a Game class
+     */
+    public abstract List<String> getStatNames();
 }

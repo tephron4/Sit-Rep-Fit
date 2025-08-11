@@ -16,54 +16,28 @@ import static org.mockito.Mockito.*;
 
 public class GetWorkoutTest {
     @Test
-    public void appGetsRepsWorkoutAfterWin() {
+    public void appGetsRepsWorkout() {
         Random mockRandom = mock(Random.class);
 
         GetWorkout gw = new GetWorkout(mockRandom);
         when(mockRandom.nextInt(gw.getWorkouts().size())).thenReturn(0); // returns push-ups (REPS)
-        int deaths = 8;
+        int reps = 8;
 
-        Workout winWorkout = gw.getWorkout(deaths, true);
+        Workout winWorkout = gw.getWorkout(reps);
 
-        assertEquals(deaths, winWorkout.getCount(), "workout should have count of 8");
+        assertEquals(reps, winWorkout.getCount(), "workout should have count of 8");
     }
 
     @Test
-    public void appGetsTimedWorkoutAfterWin() {
+    public void appGetsTimedWorkout() {
         Random mockRandom = mock(Random.class);
 
         GetWorkout gw = new GetWorkout(mockRandom);
         when(mockRandom.nextInt(gw.getWorkouts().size())).thenReturn(1); // returns planks (Timed)
-        int deaths = 9;
+        int reps = 9;
 
-        Workout winWorkout = gw.getWorkout(deaths, true);
+        Workout winWorkout = gw.getWorkout(reps);
 
-        assertEquals(deaths * 5, winWorkout.getCount(), "workout should have count of 40");
-    }
-
-    @Test
-    public void appGetsRepsWorkoutAfterLoss() {
-        Random mockRandom = mock(Random.class);
-
-        GetWorkout gw = new GetWorkout(mockRandom);
-        when(mockRandom.nextInt(gw.getWorkouts().size())).thenReturn(0); // returns push-ups (REPS)
-        int deaths = 7;
-
-        Workout lossWorkout = gw.getWorkout(deaths, false);
-
-        assertEquals(deaths * 2, lossWorkout.getCount(), "workout should have count of 14");
-    }
-
-    @Test
-    public void appGetsTimedWorkoutAfterLoss() {
-        Random mockRandom = mock(Random.class);
-
-        GetWorkout gw = new GetWorkout(mockRandom);
-        when(mockRandom.nextInt(gw.getWorkouts().size())).thenReturn(1); // returns planks (TIMED)
-        int deaths = 6;
-
-        Workout lossWorkout = gw.getWorkout(deaths, false);
-
-        assertEquals((deaths * 5) * 2, lossWorkout.getCount(), "workout should have count of 60");
+        assertEquals(reps * 5, winWorkout.getCount(), "workout should have count of 40");
     }
 }
