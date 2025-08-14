@@ -45,6 +45,6 @@ public class MarvelRivals extends Game {
     @Override
     public List<String> getStatNames() {
         // TODO: Add other stats (i.e. final hits, damage, healing, damage blocked)
-        return new ArrayList(stats.keySet());
+        return new ArrayList<String>(stats.keySet());
     }
 }
