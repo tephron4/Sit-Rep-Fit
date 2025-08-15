@@ -12,17 +12,17 @@ import java.util.List;
 
 public class Workout {
 
-    private List<Exercise> exercises;
+    private List<ExerciseTodo> exercises;
     private Timestamp completedAt;
 
     public Workout() {
     }
 
-    public void addExercise(Exercise exercise) {
+    public void addExercise(ExerciseTodo exercise) {
         this.exercises.add(exercise);
     }
 
-    public List<Exercise> getExercises() {
+    public List<ExerciseTodo> getExercises() {
         return this.exercises;
     }
 
