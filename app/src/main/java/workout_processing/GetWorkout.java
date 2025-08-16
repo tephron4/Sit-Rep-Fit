@@ -11,7 +11,6 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorCompletionService;
 
 import games.Game;
 import main.java.workout_processing.GetGame;
@@ -206,9 +205,9 @@ public class GetWorkout {
             try {
                 Game game = gg.getGame();
                 if (game.getWin()) {
-                    gw.winCounter++;
+                    gw.wonGame();
                 } else {
-                    gw.lossCounter++;
+                    gw.lostGame();
                 }
 
                 gw.killCounter += (Integer) game.getStatValue("kills");
