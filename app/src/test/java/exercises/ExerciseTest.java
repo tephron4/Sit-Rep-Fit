@@ -6,11 +6,10 @@
 
 package test.java.exercises;
 
-import org.junit.jupiter.api.Test;
-
 import main.java.exercises.Exercise;
 import main.java.exercises.Exercise.ExerciseType;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ExerciseTest {
