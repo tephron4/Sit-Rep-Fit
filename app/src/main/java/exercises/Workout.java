@@ -27,7 +27,9 @@ public class Workout {
     }
 
     public void complete() {
-        this.completedAt = Timestamp.from(Instant.now());
+        if (this.completedAt == null) {
+            this.completedAt = Timestamp.from(Instant.now());
+        }
     }
 
     public Timestamp getCompletedAt() {

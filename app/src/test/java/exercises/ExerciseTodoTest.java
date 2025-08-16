@@ -38,6 +38,29 @@ public class ExerciseTodoTest {
     @Test
     public void canComplete() {
         ExerciseTodo eTodo = new ExerciseTodo(exercise_reps_1, 5);
+
+        eTodo.complete();
+        Timestamp completedAt = eTodo.getCompletedAt();
+
+        assertNotNull(completedAt);
+    }
+
+    @Test
+    public void alreadyCompleted() {
+        ExerciseTodo eTodo = new ExerciseTodo(exercise_reps_1, 5);
+        eTodo.complete();
+
+        Timestamp initialCompletedAt = eTodo.getCompletedAt();
+        assertNotNull(initialCompletedAt);
+
+        eTodo.complete(); // Call complete() again
+
+        assertEquals(initialCompletedAt, eTodo.getCompletedAt()); // completedAt value should not have changed
+    }
+
+    @Test
+    public void getsCompletedAt() {
+        ExerciseTodo eTodo = new ExerciseTodo(exercise_reps_1, 5);
         Instant fixedInstant = Instant.now();
 
         try (MockedStatic<Instant> mockedStaticInstant = mockStatic(Instant.class)) {
