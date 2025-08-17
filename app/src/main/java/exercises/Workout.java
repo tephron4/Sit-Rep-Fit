@@ -8,6 +8,7 @@ package main.java.exercises;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Workout {
@@ -16,6 +17,7 @@ public class Workout {
     private Timestamp completedAt;
 
     public Workout() {
+        this.exercises = new ArrayList<ExerciseTodo>();
     }
 
     public void addExercise(ExerciseTodo exercise) {

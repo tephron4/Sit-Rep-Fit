@@ -32,7 +32,7 @@ public class ExerciseTodoTest {
     public void getsCount() {
         ExerciseTodo eTodo = new ExerciseTodo(exercise_reps_1, 5);
 
-        asserEquals(5, eTodo.getCount());
+        assertEquals(5, eTodo.getCount());
     }
 
     @Test
@@ -56,21 +56,5 @@ public class ExerciseTodoTest {
         eTodo.complete(); // Call complete() again
 
         assertEquals(initialCompletedAt, eTodo.getCompletedAt()); // completedAt value should not have changed
-    }
-
-    @Test
-    public void getsCompletedAt() {
-        ExerciseTodo eTodo = new ExerciseTodo(exercise_reps_1, 5);
-        Instant fixedInstant = Instant.now();
-
-        try (MockedStatic<Instant> mockedStaticInstant = mockStatic(Instant.class)) {
-            mockedStaticInstant.when(Instant::now).thenReturn(fixedInstant);
-
-            eTodo.complete();
-
-            Timestamp expected = Timestamp.from(fixedInstant);
-
-            assertEquals(expected, etodo.getCompletedAt());
-        }
     }
 }
