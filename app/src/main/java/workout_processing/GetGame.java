@@ -126,15 +126,10 @@ public class GetGame {
     private Object getStatValue(String stat, Class type) {
         if (type == Integer.class) {
             return this.getIntegerStat(stat);
-        } else if (type == String.class) {
-            return this.getStringStat(stat);
-        } else if (type == Float.class) {
-            return this.getFloatStat(stat);
-        } else if (type == Boolean.class) {
-            return this.getBooleanStat(stat);
+        } else {
+            // TODO (ephront): Add support for other Classes (Float, Boolean, etc.)
+            throw new IllegalArgumentException("Unsupported stat type: " + type.getName());
         }
-
-        return null;
     }
 
     private Integer getIntegerStat(String stat) {
@@ -147,56 +142,6 @@ public class GetGame {
             } catch (NumberFormatException | NullPointerException e) {
                 System.out.println("\nPlease enter an integer value");
                 continue;
-            }
-        }
-    }
-
-    private String getStringStat(String stat) {
-        while (true) {
-            System.out.println("\n\nWhat did you get for " + stat + "?");
-            String resp = this.sc.nextLine().strip();
-
-            if (resp.isEmpty()) {
-                System.out.println("\nERROR: Empty response given");
-                continue;
-            }
-
-            return resp;
-        }
-    }
-
-    private Float getFloatStat(String stat) {
-        while (true) {
-            System.out.println("\n\nWhat did you get for " + stat + "?");
-            String resp = this.sc.nextLine().strip();
-
-            try {
-                return Float.parseFloat(resp);
-            } catch (NumberFormatException | NullPointerException e) {
-                System.out.println("\nPlease enter a number value");
-                continue;
-            }
-        }
-    }
-
-    private Boolean getBooleanStat(String stat) {
-        while (true) {
-            System.out.println("\n\n" + stat + "? (Y/n)");
-            String resp = this.sc.nextLine().strip();
-
-            if (resp.isEmpty()) {
-                System.out.println("\nPlease enter Yes/no (Y/n)");
-                continue;
-            }
-
-            switch (resp.toUpperCase().charAt(0)) {
-                case 'Y':
-                    return true;
-                case 'N':
-                    return false;
-                default:
-                    System.out.println("Please answer with Yes/no (also stands for True/false)");
-                    continue;
             }
         }
     }

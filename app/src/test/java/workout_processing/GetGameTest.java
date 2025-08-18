@@ -142,4 +142,44 @@ public class GetGameTest {
         assertTrue(actualGame.getWin());
         assertEquals(Map.of("kills", 25, "deaths", 7, "assists", 10), actualGame.getStatValues());
     }
+
+    @Test
+    public void handlesEmptyIntInput() {
+        String input = "1\ny\n\n25\n7\n10";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+
+        GetGame getGame = new GetGame(new Scanner(in));
+
+        Game actualGame = getGame.getGame();
+
+        String invalidInput = "Please enter an integer value";
+
+        // Check that it caught the invalid input
+        assertTrue(outputStream.toString().contains(invalidInput));
+        // Check that the game was still retrieved correctly
+        assertNotNull(actualGame.getEndTime());
+        assertTrue(actualGame.getWin());
+        assertEquals(Map.of("kills", 25, "deaths", 7, "assists", 10), actualGame.getStatValues());
+    }
+
+    @Test
+    public void handlesNonIntegerInput() {
+        String input = "1\ny\ntest\n25\n7\n10";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+
+        GetGame getGame = new GetGame(new Scanner(in));
+
+        Game actualGame = getGame.getGame();
+
+        String invalidInput = "Please enter an integer value";
+
+        // Check that it caught the invalid input
+        assertTrue(outputStream.toString().contains(invalidInput));
+        // Check that the game was still retrieved correctly
+        assertNotNull(actualGame.getEndTime());
+        assertTrue(actualGame.getWin());
+        assertEquals(Map.of("kills", 25, "deaths", 7, "assists", 10), actualGame.getStatValues());
+    }
+
+    // TODO (ephront): Add tests for other stat types (Float, Boolean, etc.)
 }
