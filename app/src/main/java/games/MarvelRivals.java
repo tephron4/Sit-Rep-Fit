@@ -9,14 +9,20 @@ package games;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class MarvelRivals extends Game {
 
-    private static Map<String, Class> stats = Map.of("kills", Integer.class, "deaths", Integer.class, "assists",
-            Integer.class);
+    private static LinkedHashMap<String, Class> stats = new LinkedHashMap<>() {
+        {
+            put("kills", Integer.class);
+            put("deaths", Integer.class);
+            put("assists", Integer.class);
+        }
+    };
 
     public MarvelRivals() {
         super();
@@ -38,7 +44,7 @@ public class MarvelRivals extends Game {
     }
 
     @Override
-    public Map<String, Class> getStats() {
+    public LinkedHashMap<String, Class> getStats() {
         return stats;
     }
 
