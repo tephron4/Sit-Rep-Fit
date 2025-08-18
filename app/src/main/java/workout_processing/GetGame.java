@@ -105,7 +105,12 @@ public class GetGame {
     private boolean getWin() {
         while (true) {
             System.out.println("\n\nDid you win the game? (Y/n)");
-            String resp = this.sc.nextLine();
+            String resp = this.sc.nextLine().strip();
+
+            if (resp.isEmpty()) {
+                System.out.println("\nPlease enter Yes/no (Y/n)");
+                continue;
+            }
 
             switch (resp.toUpperCase().charAt(0)) {
                 case 'Y':
@@ -113,7 +118,7 @@ public class GetGame {
                 case 'N':
                     return false;
                 default:
-                    System.out.println("\nPlease enter Yes/no (y/n)");
+                    System.out.println("\nPlease answer with Yes/no (Y/n)");
             }
         }
     }
@@ -178,6 +183,11 @@ public class GetGame {
         while (true) {
             System.out.println("\n\n" + stat + "? (Y/n)");
             String resp = this.sc.nextLine().strip();
+
+            if (resp.isEmpty()) {
+                System.out.println("\nPlease enter Yes/no (Y/n)");
+                continue;
+            }
 
             switch (resp.toUpperCase().charAt(0)) {
                 case 'Y':
