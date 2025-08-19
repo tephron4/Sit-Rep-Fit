@@ -13,75 +13,18 @@ import java.util.Random;
 import java.util.Scanner;
 
 import games.Game;
+import main.java.exercises.Exercise;
+import main.java.exercises.ExerciseTodo;
+import main.java.exercises.Workout;
+import main.java.exercises.Exercise.ExerciseType;
 import main.java.workout_processing.GetGame;
 
 public class GetWorkout {
 
-    public class Workout {
-
-        public enum WorkoutType {
-            REPS,
-            TIMED
-        }
-
-        private final String name;
-        private final WorkoutType type;
-        private int count = 0;
-
-        public Workout(String name, WorkoutType type) {
-            this.name = name;
-            this.type = type;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-
-        public WorkoutType getType() {
-            return this.type;
-        }
-
-        public String getTypeString() throws IllegalArgumentException {
-            switch (this.type) {
-                case REPS -> {
-                    return "reps";
-                }
-                case TIMED -> {
-                    return "secs";
-                }
-                default -> {
-                    throw new IllegalArgumentException("Unknown workout type: " + this.type);
-                }
-            }
-        }
-
-        public int getCount() throws IllegalArgumentException {
-            return switch (this.type) {
-                case REPS ->
-                    this.count;
-                case TIMED ->
-                    this.count * 5;
-                default ->
-                    throw new IllegalArgumentException("Unknown workout type: " + this.type);
-            };
-        }
-
-        public void setCount(int c) throws IllegalArgumentException {
-            if (c < 0) {
-                throw new IllegalArgumentException("Count cannot be set to a negative number.");
-            }
-
-            this.count = c;
-        }
-
-        public void printWorkout() {
-            System.out.print("Do " + this.getName() + " for " + this.getCount() + " " + this.getTypeString());
-        }
-    }
-
     private final Scanner scanner;
     private Random random;
-    private List<Workout> workouts;
+    private List<Exercise> exercises;
+    private Workout workout;
 
     public int winCounter;
     public int lossCounter;
@@ -93,14 +36,16 @@ public class GetWorkout {
         this.scanner = new Scanner(System.in);
         this.random = random;
 
-        this.workouts = List.of(
-                new Workout("push-ups", Workout.WorkoutType.REPS),
-                new Workout("planks", Workout.WorkoutType.TIMED),
-                new Workout("sit-ups", Workout.WorkoutType.REPS),
-                new Workout("crunches", Workout.WorkoutType.REPS),
-                new Workout("wall-sit", Workout.WorkoutType.TIMED),
-                new Workout("lunges", Workout.WorkoutType.REPS),
-                new Workout("squats", Workout.WorkoutType.REPS));
+        this.exercises = List.of(
+                new Exercise("push-ups", Exercise.ExerciseType.REPS),
+                new Exercise("planks", Exercise.ExerciseType.TIMED),
+                new Exercise("sit-ups", Exercise.ExerciseType.REPS),
+                new Exercise("crunches", Exercise.ExerciseType.REPS),
+                new Exercise("wall-sit", Exercise.ExerciseType.TIMED),
+                new Exercise("lunges", Exercise.ExerciseType.REPS),
+                new Exercise("squats", Exercise.ExerciseType.REPS));
+
+        this.workout = new Workout();
 
         this.winCounter = 0;
         this.lossCounter = 0;
@@ -109,21 +54,23 @@ public class GetWorkout {
         this.assistCounter = 0;
     }
 
-    public List<Workout> getWorkouts() {
-        return this.workouts;
+    public List<Exercise> getExercises() {
+        return this.exercises;
     }
 
     /**
-     * Get the workout to do based on the given stats and game-outcome.
+     * Get the ExerciseTodo
      *
      * @param reps number of reps
      * @return the workout to do, with an updated count
      */
-    public Workout getWorkout(int reps) {
-        // Get a random workout
-        Workout todo = this.workouts.get(this.random.nextInt(this.workouts.size()));
-        // Set the new count and return the workout
-        todo.setCount(reps);
+    public ExerciseTodo getExerciseTodo(int reps) {
+        Exercise exercise = this.exercises.get(this.random.nextInt(this.exercises.size()));
+
+        ExerciseTodo todo = new ExerciseTodo(
+                exercise,
+                exercise.getType() == ExerciseType.REPS ? reps : reps * 5);
+
         return todo;
     }
 
@@ -144,6 +91,11 @@ public class GetWorkout {
             System.out.println("\n\nNew game to report? (Y/n)");
 
             String resp = this.scanner.nextLine();
+
+            if (resp.isEmpty()) {
+                System.out.println("\nPlease enter Yes/no (Y/n)");
+                continue;
+            }
 
             switch (resp.toUpperCase().charAt(0)) {
                 case 'Y' -> {
@@ -214,10 +166,11 @@ public class GetWorkout {
                 gw.deathCounter += (Integer) game.getStatValue("deaths");
                 gw.assistCounter += (Integer) game.getStatValue("assists");
 
-                Workout workoutTodo = gw.getWorkout(game.calculateReps());
+                ExerciseTodo exerciseTodo = gw.getExerciseTodo(game.calculateReps());
+                exerciseTodo.complete(); // TODO (ephront): should set this up to be set with input from the user
+                gw.workout.addExercise(exerciseTodo);
                 System.out.println("\nHere's your workout:\n");
-                workoutTodo.printWorkout();
-                System.out.println("\n");
+                System.out.println("\n" + exerciseTodo.getInstructionString());
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 continue;
@@ -228,6 +181,8 @@ public class GetWorkout {
             }
             System.out.println("\n\n");
         }
+
+        gw.workout.complete();
 
         gw.printGoodbye();
     }

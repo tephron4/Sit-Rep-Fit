@@ -47,8 +47,10 @@ public class ExerciseTodo {
         switch (this.exercise.getType()) {
             case ExerciseType.REPS:
                 typeString = "reps";
+                break;
             case ExerciseType.TIMED:
                 typeString = "secs";
+                break;
             default:
                 typeString = "";
         }
