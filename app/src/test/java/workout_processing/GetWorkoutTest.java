@@ -7,37 +7,48 @@
 package test.java.workout_processing;
 
 import workout_processing.GetWorkout;
-import workout_processing.GetWorkout.Workout;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
+
+import main.java.exercises.Exercise;
+import main.java.exercises.ExerciseTodo;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class GetWorkoutTest {
     @Test
-    public void appGetsRepsWorkout() {
+    public void appGetsRepsExerciseTodo() {
         Random mockRandom = mock(Random.class);
 
         GetWorkout gw = new GetWorkout(mockRandom);
-        when(mockRandom.nextInt(gw.getWorkouts().size())).thenReturn(0); // returns push-ups (REPS)
+        when(mockRandom.nextInt(gw.getExercises().size())).thenReturn(0); // returns push-ups (REPS)
         int reps = 8;
 
-        Workout winWorkout = gw.getWorkout(reps);
+        ExerciseTodo winExerciseTodo = gw.getExerciseTodo(reps);
 
-        assertEquals(reps, winWorkout.getCount(), "workout should have count of 8");
+        assertEquals("push-ups", winExerciseTodo.getExercise().getName());
+        assertEquals(Exercise.ExerciseType.REPS, winExerciseTodo.getExercise().getType());
+        assertNull(winExerciseTodo.getCompletedAt());
+        assertEquals(reps, winExerciseTodo.getCount(), "workout should have count of 8");
     }
 
     @Test
-    public void appGetsTimedWorkout() {
+    public void appGetsTimedExerciseTodo() {
         Random mockRandom = mock(Random.class);
 
         GetWorkout gw = new GetWorkout(mockRandom);
-        when(mockRandom.nextInt(gw.getWorkouts().size())).thenReturn(1); // returns planks (Timed)
-        int reps = 9;
+        when(mockRandom.nextInt(gw.getExercises().size())).thenReturn(1); // returns planks (Timed)
+        int reps = 8;
 
-        Workout winWorkout = gw.getWorkout(reps);
+        ExerciseTodo winExerciseTodo = gw.getExerciseTodo(reps);
 
-        assertEquals(reps * 5, winWorkout.getCount(), "workout should have count of 40");
+        assertEquals("planks", winExerciseTodo.getExercise().getName());
+        assertEquals(Exercise.ExerciseType.TIMED, winExerciseTodo.getExercise().getType());
+        assertNull(winExerciseTodo.getCompletedAt());
+        assertEquals(reps * 5, winExerciseTodo.getCount(), "workout should have count of 40");
     }
 }

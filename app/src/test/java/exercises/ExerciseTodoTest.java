@@ -19,7 +19,8 @@ import java.time.Instant;
 
 public class ExerciseTodoTest {
 
-    private Exercise exercise_reps_1 = new Exercise("exercise_1", ExerciseType.REPS);
+    private static Exercise exercise_reps_1 = new Exercise("exercise_1", ExerciseType.REPS);
+    private static Exercise exercise_timed_1 = new Exercise("exercise_2", ExerciseType.TIMED);
 
     @Test
     public void getsExercise() {
@@ -56,5 +57,23 @@ public class ExerciseTodoTest {
         eTodo.complete(); // Call complete() again
 
         assertEquals(initialCompletedAt, eTodo.getCompletedAt()); // completedAt value should not have changed
+    }
+
+    @Test
+    public void getsRepsInstructionString() {
+        ExerciseTodo eTodo = new ExerciseTodo(exercise_reps_1, 5);
+
+        String expectedInstruction = "Do exercise_1 for 5 reps";
+
+        assertEquals(expectedInstruction, eTodo.getInstructionString());
+    }
+
+    @Test
+    public void getsTimedInstructionString() {
+        ExerciseTodo eTodo = new ExerciseTodo(exercise_timed_1, 40);
+
+        String expectedInstruction = "Do exercise_2 for 40 secs";
+
+        assertEquals(expectedInstruction, eTodo.getInstructionString());
     }
 }
