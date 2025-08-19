@@ -37,13 +37,13 @@ public class GetWorkout {
         this.random = random;
 
         this.exercises = List.of(
-                new Exercise("push-ups", Exercise.ExerciseType.REPS),
-                new Exercise("planks", Exercise.ExerciseType.TIMED),
-                new Exercise("sit-ups", Exercise.ExerciseType.REPS),
-                new Exercise("crunches", Exercise.ExerciseType.REPS),
-                new Exercise("wall-sit", Exercise.ExerciseType.TIMED),
-                new Exercise("lunges", Exercise.ExerciseType.REPS),
-                new Exercise("squats", Exercise.ExerciseType.REPS));
+                new Exercise("push-ups", ExerciseType.REPS),
+                new Exercise("planks", ExerciseType.TIMED),
+                new Exercise("sit-ups", ExerciseType.REPS),
+                new Exercise("crunches", ExerciseType.REPS),
+                new Exercise("wall-sit", ExerciseType.TIMED),
+                new Exercise("lunges", ExerciseType.REPS),
+                new Exercise("squats", ExerciseType.REPS));
 
         this.workout = new Workout();
 
