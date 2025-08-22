@@ -4,7 +4,7 @@
  * @author Tobias Ephron
  */
 
-package main.java.exercises;
+package exercises;
 
 import java.sql.Timestamp;
 import java.time.Instant;

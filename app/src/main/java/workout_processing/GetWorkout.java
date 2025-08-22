@@ -13,11 +13,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 import games.Game;
-import main.java.exercises.Exercise;
-import main.java.exercises.ExerciseTodo;
-import main.java.exercises.Workout;
-import main.java.exercises.Exercise.ExerciseType;
-import main.java.workout_processing.GetGame;
+import exercises.Exercise;
+import exercises.ExerciseTodo;
+import exercises.Workout;
+import exercises.Exercise.ExerciseType;
+import workout_processing.GetGame;
 
 public class GetWorkout {
 

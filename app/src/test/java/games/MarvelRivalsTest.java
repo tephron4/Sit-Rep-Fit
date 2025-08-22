@@ -4,14 +4,10 @@
  * @author: Tobias Ephron
  */
 
-package test.java.games;
-
-import games.Game;
-import games.MarvelRivals;
+package games;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

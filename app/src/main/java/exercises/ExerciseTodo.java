@@ -6,9 +6,9 @@
  * @author Tobias Ephron
  */
 
-package main.java.exercises;
+package exercises;
 
-import main.java.exercises.Exercise.ExerciseType;
+import exercises.Exercise.ExerciseType;
 
 import java.sql.Timestamp;
 import java.time.Instant;

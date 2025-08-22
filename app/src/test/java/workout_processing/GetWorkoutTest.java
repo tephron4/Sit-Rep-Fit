@@ -4,17 +4,13 @@
  * @author: Tobias Ephron
  */
 
-package test.java.workout_processing;
+package workout_processing;
 
-import workout_processing.GetWorkout;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
 
-import main.java.exercises.Exercise;
-import main.java.exercises.ExerciseTodo;
+import exercises.Exercise;
+import exercises.ExerciseTodo;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
