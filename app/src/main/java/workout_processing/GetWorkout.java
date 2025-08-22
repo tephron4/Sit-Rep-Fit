@@ -6,8 +6,6 @@
  */
 package workout_processing;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -17,7 +15,6 @@ import exercises.Exercise;
 import exercises.ExerciseTodo;
 import exercises.Workout;
 import exercises.Exercise.ExerciseType;
-import workout_processing.GetGame;
 
 public class GetWorkout {
 

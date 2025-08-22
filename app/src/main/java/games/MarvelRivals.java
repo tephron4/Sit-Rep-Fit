@@ -8,7 +8,6 @@
 package games;
 
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +15,7 @@ import java.util.Map;
 
 public class MarvelRivals extends Game {
 
+    @SuppressWarnings("rawtypes")
     private static LinkedHashMap<String, Class> stats = new LinkedHashMap<>() {
         {
             put("kills", Integer.class);
@@ -43,6 +43,7 @@ public class MarvelRivals extends Game {
         return (deaths == 0 ? 1 : deaths) * (this.win ? 1 : 2);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public LinkedHashMap<String, Class> getStats() {
         return stats;
