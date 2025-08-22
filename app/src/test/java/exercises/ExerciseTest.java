@@ -6,7 +6,6 @@
 
 package exercises;
 
-import exercises.Exercise;
 import exercises.Exercise.ExerciseType;
 
 import org.junit.jupiter.api.Test;

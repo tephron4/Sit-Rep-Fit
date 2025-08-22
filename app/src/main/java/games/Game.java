@@ -9,7 +9,6 @@ package games;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +42,10 @@ public abstract class Game {
 
     private boolean checkStatValues(Map<String, Object> map) {
         if (getStatNames().size() == map.keySet().size() && getStatNames().containsAll(map.keySet())) {
+            @SuppressWarnings("rawtypes")
             LinkedHashMap<String, Class> typesMap = getStats();
-            for (Entry entry : map.entrySet()) {
+            for (@SuppressWarnings("rawtypes")
+            Entry entry : map.entrySet()) {
                 if (typesMap.get(entry.getKey()) != entry.getValue().getClass()) {
                     return false;
                 }
@@ -102,6 +103,7 @@ public abstract class Game {
      * 
      * @return a map of stats to their respective types
      */
+    @SuppressWarnings("rawtypes")
     public abstract LinkedHashMap<String, Class> getStats();
 
     /**

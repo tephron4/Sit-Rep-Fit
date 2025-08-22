@@ -84,6 +84,7 @@ public class GetGame {
         }
 
         List<String> statNames = tempGameInstance.getStatNames();
+        @SuppressWarnings("rawtypes")
         Map<String, Class> stats = tempGameInstance.getStats();
 
         boolean win = this.getWin();
@@ -123,7 +124,7 @@ public class GetGame {
         }
     }
 
-    private Object getStatValue(String stat, Class type) {
+    private Object getStatValue(String stat, @SuppressWarnings("rawtypes") Class type) {
         if (type == Integer.class) {
             return this.getIntegerStat(stat);
         } else {
