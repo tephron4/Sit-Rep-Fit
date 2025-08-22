@@ -4,18 +4,13 @@
  * @author Tobias Ephron
  */
 
-package test.java.exercises;
+package exercises;
 
-import main.java.exercises.Exercise;
-import main.java.exercises.ExerciseTodo;
-import main.java.exercises.Exercise.ExerciseType;
-
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mockStatic;
+import exercises.Exercise.ExerciseType;
 
 import java.sql.Timestamp;
-import java.time.Instant;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class ExerciseTodoTest {
 

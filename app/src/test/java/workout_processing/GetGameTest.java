@@ -4,10 +4,9 @@
  * @author Tobias Ephron
  */
 
-package test.java.workout_processing;
+package workout_processing;
 
 import games.Game;
-import main.java.workout_processing.GetGame;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +17,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 

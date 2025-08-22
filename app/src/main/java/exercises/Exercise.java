@@ -4,7 +4,7 @@
  * @author Tobias Ephron
  */
 
-package main.java.exercises;
+package exercises;
 
 public class Exercise {
 

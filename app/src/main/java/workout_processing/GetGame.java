@@ -6,7 +6,7 @@
  * @author Tobias Ephron
  */
 
-package main.java.workout_processing;
+package workout_processing;
 
 import java.sql.Timestamp;
 import java.time.Instant;

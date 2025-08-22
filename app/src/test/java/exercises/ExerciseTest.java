@@ -4,10 +4,10 @@
  * @author Tobias Ephron
  */
 
-package test.java.exercises;
+package exercises;
 
-import main.java.exercises.Exercise;
-import main.java.exercises.Exercise.ExerciseType;
+import exercises.Exercise;
+import exercises.Exercise.ExerciseType;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
