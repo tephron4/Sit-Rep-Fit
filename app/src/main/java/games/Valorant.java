@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class Valorant extends Game {
 
-    private enum GameMode {
+    public enum GameMode {
         UNRATED,
         COMPETITIVE,
         SWIFTPLAY,
@@ -79,10 +79,10 @@ public class Valorant extends Game {
         count += assistModifier >= 1 ? 1 : -1;
         count += (boolean) this.getWin() ? 1 : -1;
 
-        int starting = Math.round((int) this.getStatValue("deaths") * (2 / 3));
+        int starting = Math.round((int) this.getStatValue("deaths") * (2f / 3));
 
         if (count > 0) {
-            int res = Math.round(starting * (2 / 3));
+            int res = Math.round(starting * (2f / 3));
             return res;
         } else {
             int res = starting + (diff < 0 ? Math.abs(diff) : 0);
@@ -101,7 +101,7 @@ public class Valorant extends Game {
         int starting = Math.round((int) this.getStatValue("deaths") * 0.75f);
 
         if (count > 0) {
-            int res = Math.round(starting * (2 / 3));
+            int res = Math.round(starting * (2f / 3));
             return res;
         } else {
             int res = starting + (diff < 0 ? Math.abs(diff) : 0);
