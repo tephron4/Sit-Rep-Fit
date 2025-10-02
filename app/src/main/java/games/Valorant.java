@@ -16,13 +16,24 @@ import java.util.Map;
 public class Valorant extends Game {
 
     public enum GameMode {
-        UNRATED,
-        COMPETITIVE,
-        SWIFTPLAY,
-        SPIKE_RUSH,
-        DEATHMATCH,
-        ESCALATION,
-        TEAM_DEATHMATCH
+        UNRATED("Unrated"),
+        COMPETITIVE("Competitive"),
+        SWIFTPLAY("Swiftplay"),
+        SPIKE_RUSH("Spike Rush"),
+        DEATHMATCH("Deathmatch"),
+        ESCALATION("Escalation"),
+        TEAM_DEATHMATCH("Team Deathmatch");
+
+        private final String displayString;
+
+        private GameMode(String displayString) {
+            this.displayString = displayString;
+        }
+
+        public String getDisplayString() {
+            return this.displayString;
+        }
+
     }
 
     @SuppressWarnings("rawtypes")

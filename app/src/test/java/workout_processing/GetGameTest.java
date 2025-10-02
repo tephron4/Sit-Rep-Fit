@@ -7,6 +7,7 @@
 package workout_processing;
 
 import games.Game;
+import games.Valorant.GameMode;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -177,6 +178,65 @@ public class GetGameTest {
         assertNotNull(actualGame.getEndTime());
         assertTrue(actualGame.getWin());
         assertEquals(Map.of("kills", 25, "deaths", 7, "assists", 10), actualGame.getStatValues());
+    }
+
+    @Test
+    public void handlesEnumInput() {
+        String input = "2\ny\n3\n6\n3\n4";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+
+        GetGame getGame = new GetGame(new Scanner(in));
+
+        Game actualGame = getGame.getGame();
+
+        // Check that the game was retrieved correctly
+        assertNotNull(actualGame.getEndTime());
+        assertTrue(actualGame.getWin());
+        assertEquals(
+                Map.of("game mode", GameMode.SWIFTPLAY, "kills", 6, "deaths", 3, "assists", 4),
+                actualGame.getStatValues());
+    }
+
+    @Test
+    public void handlesNonIntegerEnumChoice() {
+        String input = "2\ny\ntest\n3\n6\n3\n4";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+
+        GetGame getGame = new GetGame(new Scanner(in));
+
+        Game actualGame = getGame.getGame();
+
+        String invalidInput = "Please input a valid integer from the list of choices";
+
+        // Check that it caught the invalid input
+        assertTrue(outputStream.toString().contains(invalidInput));
+        // Check that the game was still retrieved correctly
+        assertNotNull(actualGame.getEndTime());
+        assertTrue(actualGame.getWin());
+        assertEquals(
+                Map.of("game mode", GameMode.SWIFTPLAY, "kills", 6, "deaths", 3, "assists", 4),
+                actualGame.getStatValues());
+    }
+
+    @Test
+    public void handlesInvalidEnumChoice() {
+        String input = "2\ny\n4444\n3\n6\n3\n4";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+
+        GetGame getGame = new GetGame(new Scanner(in));
+
+        Game actualGame = getGame.getGame();
+
+        String invalidInput = "Please select an option from the given list";
+
+        // Check that it caught the invalid input
+        assertTrue(outputStream.toString().contains(invalidInput));
+        // Check that the game was still retrieved correctly
+        assertNotNull(actualGame.getEndTime());
+        assertTrue(actualGame.getWin());
+        assertEquals(
+                Map.of("game mode", GameMode.SWIFTPLAY, "kills", 6, "deaths", 3, "assists", 4),
+                actualGame.getStatValues());
     }
 
     // TODO (ephront): Add tests for other stat types (Float, Boolean, etc.)
