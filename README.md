@@ -8,6 +8,7 @@ Stay active while gaming. This program is meant to help the user stay active whi
   - [Supported Exercises](#supported-exercises)
 - [Supported Games](#supported-games)
   - [Marvel Rivals](#marvel-rivals)
+  - [Valorant](#valorant)
 - [Building and Testing](#building-and-testing)
 - [Running the CLI](#running-the-cli)
 - [Future Plans](#future-plans)
@@ -41,6 +42,14 @@ For Marvel Rivals, the program supports the basic statistics: kills, deaths, and
 - For a win: $\text{reps}=\text{deaths}$
 - For a loss: $\text{reps} = 2*\text{deaths}$
 
+### Valorant
+
+For Valorant, the program supports specifying game mode played and the basic statistics: kills, deaths, and assists.
+
+#### Rep Calculation
+
+This will vary based on game mode played, but will be based generally around whether it was a win or loss and deaths.
+
 ## Building and Testing
 
 This program is built using Gradle and can be built with:
@@ -69,8 +78,8 @@ The program can be run directly in the terminal with:
 
 # Future Plans:
 
+- Add more supported games
 - Update the time/repititions calculation logic
-- Expand the program to be game based (Seperate/different statistics and seperate/different calculations)
 - Database storage for historical exercise/workout data (for tracking)
 - Connect to different game APIs for automatic game->exercise processing (pulling game results/statistics from relative APIs)
 - GUI (web based and/or application)
