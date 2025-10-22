@@ -9,6 +9,7 @@
 package exercises;
 
 import exercises.Exercise.ExerciseType;
+import games.Game;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -18,10 +19,14 @@ public class ExerciseTodo {
     private final Exercise exercise;
     private final int count;
     private Timestamp completedAt;
+    private final Game game;
 
-    public ExerciseTodo(Exercise exercise, int count) {
+    public ExerciseTodo(Exercise exercise, Game game) {
         this.exercise = exercise;
-        this.count = count;
+        this.game = game;
+
+        int reps = this.game.calculateReps();
+        this.count = this.exercise.getType() == ExerciseType.REPS ? reps : reps * 5;
     }
 
     public Exercise getExercise() {
@@ -30,6 +35,10 @@ public class ExerciseTodo {
 
     public int getCount() {
         return this.count;
+    }
+
+    public Game getGame() {
+        return this.game;
     }
 
     public void complete() {

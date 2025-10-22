@@ -61,12 +61,10 @@ public class GetWorkout {
      * @param reps number of reps
      * @return the workout to do, with an updated count
      */
-    public ExerciseTodo getExerciseTodo(int reps) {
+    public ExerciseTodo getExerciseTodo(Game game) {
         Exercise exercise = this.exercises.get(this.random.nextInt(this.exercises.size()));
 
-        ExerciseTodo todo = new ExerciseTodo(
-                exercise,
-                exercise.getType() == ExerciseType.REPS ? reps : reps * 5);
+        ExerciseTodo todo = new ExerciseTodo(exercise, game);
 
         return todo;
     }
@@ -163,7 +161,7 @@ public class GetWorkout {
                 gw.deathCounter += (Integer) game.getStatValue("deaths");
                 gw.assistCounter += (Integer) game.getStatValue("assists");
 
-                ExerciseTodo exerciseTodo = gw.getExerciseTodo(game.calculateReps());
+                ExerciseTodo exerciseTodo = gw.getExerciseTodo(game);
                 exerciseTodo.complete(); // TODO (ephront): should set this up to be set with input from the user
                 gw.workout.addExercise(exerciseTodo);
                 System.out.println("\nHere's your workout:\n");
