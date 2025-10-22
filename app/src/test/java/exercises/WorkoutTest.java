@@ -6,11 +6,12 @@
 
 package exercises;
 
-import org.junit.jupiter.api.Test;
-
 import exercises.Exercise.ExerciseType;
+import games.Game;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -20,8 +21,10 @@ public class WorkoutTest {
     private Exercise exercise_1 = new Exercise("exercise_1", ExerciseType.REPS);
     private Exercise exercise_2 = new Exercise("exercise_2", ExerciseType.TIMED);
 
-    private ExerciseTodo eTodo_1 = new ExerciseTodo(exercise_1, 8);
-    private ExerciseTodo eTodo_2 = new ExerciseTodo(exercise_2, 12);
+    Game mockGame = mock(Game.class);
+
+    private ExerciseTodo eTodo_1 = new ExerciseTodo(exercise_1, mockGame);
+    private ExerciseTodo eTodo_2 = new ExerciseTodo(exercise_2, mockGame);
 
     @Test
     public void addsExerciseToWorkout() {

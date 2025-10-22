@@ -11,20 +11,26 @@ import org.junit.jupiter.api.Test;
 
 import exercises.Exercise;
 import exercises.ExerciseTodo;
+import games.Game;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class GetWorkoutTest {
+
+    Game mockGame = mock(Game.class);
+
     @Test
     public void appGetsRepsExerciseTodo() {
         Random mockRandom = mock(Random.class);
 
         GetWorkout gw = new GetWorkout(mockRandom);
         when(mockRandom.nextInt(gw.getExercises().size())).thenReturn(0); // returns push-ups (REPS)
-        int reps = 8;
 
-        ExerciseTodo winExerciseTodo = gw.getExerciseTodo(reps);
+        int reps = 8;
+        when(mockGame.calculateReps()).thenReturn(reps);
+
+        ExerciseTodo winExerciseTodo = gw.getExerciseTodo(mockGame);
 
         assertEquals("push-ups", winExerciseTodo.getExercise().getName());
         assertEquals(Exercise.ExerciseType.REPS, winExerciseTodo.getExercise().getType());
@@ -38,9 +44,11 @@ public class GetWorkoutTest {
 
         GetWorkout gw = new GetWorkout(mockRandom);
         when(mockRandom.nextInt(gw.getExercises().size())).thenReturn(1); // returns planks (Timed)
-        int reps = 8;
 
-        ExerciseTodo winExerciseTodo = gw.getExerciseTodo(reps);
+        int reps = 8;
+        when(mockGame.calculateReps()).thenReturn(reps);
+
+        ExerciseTodo winExerciseTodo = gw.getExerciseTodo(mockGame);
 
         assertEquals("planks", winExerciseTodo.getExercise().getName());
         assertEquals(Exercise.ExerciseType.TIMED, winExerciseTodo.getExercise().getType());
