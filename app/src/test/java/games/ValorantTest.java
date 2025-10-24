@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ValorantTest {
 
+
     /** Unrated Tests */
     @Test
     public void calculatesUnratedReps_Pos_AssistMod_Win() {
