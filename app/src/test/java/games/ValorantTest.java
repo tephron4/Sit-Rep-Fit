@@ -30,9 +30,9 @@ public class ValorantTest {
         "10, 15, 3, false, 15"
     })
     public void calculatesUnratedReps(int kills, int deaths, int assists, boolean win, int expected) {
-        Map<String, Object> statValues = Map.of("game mode", Valorant.GameMode.UNRATED, "kills", kills, "deaths", deaths, "assists", assists);
+        Map<String, Object> statValues = Map.of("kills", kills, "deaths", deaths, "assists", assists);
 
-        Valorant val = new Valorant(Timestamp.from(Instant.now()), statValues, win);
+        Valorant val = new Valorant(Timestamp.from(Instant.now()), ValorantGameMode.UNRATED, statValues, win);
 
         assertEquals(expected, val.calculateReps());
     }
@@ -50,9 +50,9 @@ public class ValorantTest {
         "10, 15, 3, false, 16"
     })
     public void calculatesCompetitiveReps(int kills, int deaths, int assists, boolean win, int expected) {
-        Map<String, Object> statValues = Map.of("game mode", Valorant.GameMode.COMPETITIVE, "kills", kills, "deaths", deaths, "assists", assists);
+        Map<String, Object> statValues = Map.of("kills", kills, "deaths", deaths, "assists", assists);
 
-        Valorant val = new Valorant(Timestamp.from(Instant.now()), statValues, win);
+        Valorant val = new Valorant(Timestamp.from(Instant.now()), ValorantGameMode.COMPETITIVE, statValues, win);
 
         assertEquals(expected, val.calculateReps());
     }
@@ -64,10 +64,10 @@ public class ValorantTest {
         "6, 3, 3, false, 6"
     })
     public void calculatesSwiftplayReps(int kills, int deaths, int assists, boolean win, int expected) {
-        Map<String, Object> statValues = Map.of("game mode", Valorant.GameMode.SWIFTPLAY, "kills", kills, "deaths", deaths,
+        Map<String, Object> statValues = Map.of("kills", kills, "deaths", deaths,
                 "assists", assists);
 
-        Valorant val = new Valorant(Timestamp.from(Instant.now()), statValues, win);
+        Valorant val = new Valorant(Timestamp.from(Instant.now()), ValorantGameMode.SWIFTPLAY, statValues, win);
 
         assertEquals(expected, val.calculateReps());
     }
@@ -79,10 +79,10 @@ public class ValorantTest {
         "6, 3, 3, false, 6"
     })
     public void calculatesSpikeRushReps(int kills, int deaths, int assists, boolean win, int expected) {
-        Map<String, Object> statValues = Map.of("game mode", Valorant.GameMode.SPIKE_RUSH, "kills", kills, "deaths", deaths,
+        Map<String, Object> statValues = Map.of("kills", kills, "deaths", deaths,
                 "assists", assists);
 
-        Valorant val = new Valorant(Timestamp.from(Instant.now()), statValues, win);
+        Valorant val = new Valorant(Timestamp.from(Instant.now()), ValorantGameMode.SPIKE_RUSH, statValues, win);
 
         assertEquals(expected, val.calculateReps());
     }

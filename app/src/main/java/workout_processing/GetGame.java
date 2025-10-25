@@ -89,11 +89,17 @@ public class GetGame {
             return null;
         }
 
+        /** Get game mode */
+        Class<? extends Enum<?>> gameModeClass = tempGameInstance.getGameMode().getDeclaringClass();
+        Enum<?> mode = this.getGameMode(gameModeClass);
+
+        /** Get if it was a win */
+        boolean win = this.getWin();
+
+        /** Get stat values */
         List<String> statNames = tempGameInstance.getStatNames();
         @SuppressWarnings("rawtypes")
         Map<String, Class> stats = tempGameInstance.getStats();
-
-        boolean win = this.getWin();
 
         Map<String, Object> statValues = new HashMap<>();
         for (int i = 0; i < statNames.size(); i++) {
@@ -101,11 +107,71 @@ public class GetGame {
         }
 
         try {
-            Game g = game.getConstructor(Timestamp.class, Map.class, boolean.class)
-                    .newInstance(Timestamp.from(Instant.now()), statValues, win);
+            Game g = game.getConstructor(Timestamp.class, gameModeClass, Map.class, boolean.class)
+                    .newInstance(Timestamp.from(Instant.now()), mode, statValues, win);
             return g;
         } catch (Exception e) {
+            System.out.println(e);
             return null;
+        }
+    }
+
+    private <E extends Enum<E>> E getGameMode(Class<? extends Enum<?>> enumeration) {
+        int totalWidth = 30;
+
+        E[] constants = (E[]) enumeration.getEnumConstants();
+        if (constants.length == 1) {
+            System.out.println("\n\n");
+            System.out.println("------------------------------------------");
+            System.out.println("| Game modes not supported for this game |");
+            System.out.println("------------------------------------------");
+
+            return constants[0];
+        }
+
+        while (true) {
+            System.out.println("\n\nSelect a game mode:");
+            System.out.println("----------------------------------");
+
+            for (int i = 0; i < constants.length - 1; i++) { // Exclude the last option (which should be UNKOWN)
+                E option = constants[i];
+
+                int index = i + 1;
+
+                String displayString = "";
+                try {
+                    Method getDisplayMethod = enumeration.getMethod("getDisplayString");
+                    displayString = (String) getDisplayMethod.invoke(option);
+                } catch (Exception e) {
+                    displayString = option.name();
+                }
+
+                int dotCount = totalWidth - 3 - displayString.length();
+                String padding = " ";
+                for (int j = 0; j < dotCount; j++) {
+                    padding += ".";
+                }
+                padding += " ";
+
+                System.out.printf("| %-2d%s%s |\n", index, padding, displayString);
+            }
+            System.out.println("----------------------------------");
+            System.out.println("");
+
+            int resp = 0;
+
+            try {
+                resp = Integer.parseInt(this.sc.nextLine()) - 1;
+            } catch (NumberFormatException e) {
+                System.out.println("\n\nPlease input a valid integer from the list of choices\n\n");
+                continue;
+            }
+
+            if (0 <= resp && resp < constants.length - 1) { // Exclude the last option (which should be UNKOWN)
+                return constants[resp];
+            } else {
+                System.out.println("\n\nPlease select an option from the given list\n\n");
+            }
         }
     }
 

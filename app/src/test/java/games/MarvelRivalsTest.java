@@ -17,7 +17,7 @@ public class MarvelRivalsTest {
     public void calculatesWinReps() {
         Map<String, Object> statValues = Map.of("kills", 34, "deaths", 6, "assists", 11);
 
-        MarvelRivals mr = new MarvelRivals(Timestamp.from(Instant.now()), statValues, true);
+        MarvelRivals mr = new MarvelRivals(Timestamp.from(Instant.now()), MarvelRivalsMode.UNKNOWN_MODE, statValues, true);
 
         assertEquals(6, mr.calculateReps(), "Calculated reps should be 6 (equal to deaths)");
     }
@@ -26,7 +26,7 @@ public class MarvelRivalsTest {
     public void calculatesLossReps() {
         Map<String, Object> statValues = Map.of("kills", 18, "deaths", 10, "assists", 6);
 
-        MarvelRivals mr = new MarvelRivals(Timestamp.from(Instant.now()), statValues,
+        MarvelRivals mr = new MarvelRivals(Timestamp.from(Instant.now()), MarvelRivalsMode.UNKNOWN_MODE, statValues,
                 false);
 
         assertEquals(20, mr.calculateReps(), "Calculated reps should be 20 (twice # of deaths)");
@@ -36,7 +36,7 @@ public class MarvelRivalsTest {
     public void calculateRepsNegIntStat_throwsError() {
         Map<String, Object> statValues = Map.of("kills", 20, "deaths", -4, "assists", 9);
 
-        MarvelRivals mr = new MarvelRivals(Timestamp.from(Instant.now()), statValues, false);
+        MarvelRivals mr = new MarvelRivals(Timestamp.from(Instant.now()), MarvelRivalsMode.UNKNOWN_MODE, statValues, false);
 
         assertThrows(IllegalArgumentException.class, () -> mr.calculateReps(),
                 "Negative int stat (deaths) should cause an IllegalArgumentException");
@@ -46,7 +46,7 @@ public class MarvelRivalsTest {
     public void constructor_shouldNotThrowException() {
         Map<String, Object> statValues = Map.of("kills", 34, "deaths", 6, "assists", 11);
 
-        assertDoesNotThrow(() -> new MarvelRivals(Timestamp.from(Instant.now()), statValues, true));
+        assertDoesNotThrow(() -> new MarvelRivals(Timestamp.from(Instant.now()), MarvelRivalsMode.UNKNOWN_MODE, statValues, true));
     }
 
     @Test
@@ -55,9 +55,9 @@ public class MarvelRivalsTest {
         Map<String, Object> longStatValues = Map.of("kills", 40, "assists", 13, "deaths", 10, "extraStat", "fails");
 
         assertThrows(IllegalArgumentException.class,
-                () -> new MarvelRivals(Timestamp.from(Instant.now()), shortStatValues, true));
+                () -> new MarvelRivals(Timestamp.from(Instant.now()), MarvelRivalsMode.UNKNOWN_MODE, shortStatValues, true));
         assertThrows(IllegalArgumentException.class,
-                () -> new MarvelRivals(Timestamp.from(Instant.now()), longStatValues, true));
+                () -> new MarvelRivals(Timestamp.from(Instant.now()), MarvelRivalsMode.UNKNOWN_MODE, longStatValues, true));
     }
 
     @Test
@@ -65,6 +65,6 @@ public class MarvelRivalsTest {
         Map<String, Object> statValues = Map.of("kills", 40, "extraStat", "fails", "deaths", 10);
 
         assertThrows(IllegalArgumentException.class,
-                () -> new MarvelRivals(Timestamp.from(Instant.now()), statValues, true));
+                () -> new MarvelRivals(Timestamp.from(Instant.now()), MarvelRivalsMode.UNKNOWN_MODE, statValues, true));
     }
 }
