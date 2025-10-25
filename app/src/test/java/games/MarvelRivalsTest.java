@@ -33,13 +33,13 @@ public class MarvelRivalsTest {
     }
 
     @Test
-    public void calculateRepsNegDeaths_throwsError() {
+    public void calculateRepsNegIntStat_throwsError() {
         Map<String, Object> statValues = Map.of("kills", 20, "deaths", -4, "assists", 9);
 
         MarvelRivals mr = new MarvelRivals(Timestamp.from(Instant.now()), statValues, false);
 
         assertThrows(IllegalArgumentException.class, () -> mr.calculateReps(),
-                "Negative deaths should cause an IllegalArgumentException");
+                "Negative int stat (deaths) should cause an IllegalArgumentException");
     }
 
     @Test
@@ -61,7 +61,7 @@ public class MarvelRivalsTest {
     }
 
     @Test
-    public void constructorWithDiffStatValues_throwsExceptio() {
+    public void constructorWithDiffStatValues_throwsException() {
         Map<String, Object> statValues = Map.of("kills", 40, "extraStat", "fails", "deaths", 10);
 
         assertThrows(IllegalArgumentException.class,
