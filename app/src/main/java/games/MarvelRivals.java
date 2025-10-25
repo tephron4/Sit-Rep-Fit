@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MarvelRivals extends Game {
+public class MarvelRivals extends Game<MarvelRivalsMode> {
 
     @SuppressWarnings("rawtypes")
     private static LinkedHashMap<String, Class> stats = new LinkedHashMap<>() {
@@ -25,11 +25,11 @@ public class MarvelRivals extends Game {
     };
 
     public MarvelRivals() {
-        super();
+        super(MarvelRivalsMode.UNKNOWN_MODE);
     }
 
-    public MarvelRivals(Timestamp endTime, Map<String, Object> statValues, boolean win) {
-        super(endTime, statValues, win);
+    public MarvelRivals(Timestamp endTime, MarvelRivalsMode gameMode, Map<String, Object> statValues, boolean win) {
+        super(endTime, gameMode, statValues, win);
     }
 
     @Override

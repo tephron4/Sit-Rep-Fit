@@ -7,7 +7,7 @@
 package workout_processing;
 
 import games.Game;
-import games.Valorant.GameMode;
+import games.ValorantGameMode;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -182,7 +182,7 @@ public class GetGameTest {
 
     @Test
     public void handlesEnumInput() {
-        String input = "2\ny\n3\n6\n3\n4";
+        String input = "2\n3\ny\n6\n3\n4";
         InputStream in = new ByteArrayInputStream(input.getBytes());
 
         GetGame getGame = new GetGame(new Scanner(in));
@@ -192,14 +192,15 @@ public class GetGameTest {
         // Check that the game was retrieved correctly
         assertNotNull(actualGame.getEndTime());
         assertTrue(actualGame.getWin());
+        assertEquals(ValorantGameMode.SWIFTPLAY, actualGame.getGameMode());
         assertEquals(
-                Map.of("game mode", GameMode.SWIFTPLAY, "kills", 6, "deaths", 3, "assists", 4),
+                Map.of("kills", 6, "deaths", 3, "assists", 4),
                 actualGame.getStatValues());
     }
 
     @Test
     public void handlesNonIntegerEnumChoice() {
-        String input = "2\ny\ntest\n3\n6\n3\n4";
+        String input = "2\ntest\n3\ny\n6\n3\n4";
         InputStream in = new ByteArrayInputStream(input.getBytes());
 
         GetGame getGame = new GetGame(new Scanner(in));
@@ -213,14 +214,15 @@ public class GetGameTest {
         // Check that the game was still retrieved correctly
         assertNotNull(actualGame.getEndTime());
         assertTrue(actualGame.getWin());
+        assertEquals(ValorantGameMode.SWIFTPLAY, actualGame.getGameMode());
         assertEquals(
-                Map.of("game mode", GameMode.SWIFTPLAY, "kills", 6, "deaths", 3, "assists", 4),
+                Map.of("kills", 6, "deaths", 3, "assists", 4),
                 actualGame.getStatValues());
     }
 
     @Test
     public void handlesInvalidEnumChoice() {
-        String input = "2\ny\n4444\n3\n6\n3\n4";
+        String input = "2\n4444\n3\ny\n6\n3\n4";
         InputStream in = new ByteArrayInputStream(input.getBytes());
 
         GetGame getGame = new GetGame(new Scanner(in));
@@ -234,8 +236,9 @@ public class GetGameTest {
         // Check that the game was still retrieved correctly
         assertNotNull(actualGame.getEndTime());
         assertTrue(actualGame.getWin());
+        assertEquals(ValorantGameMode.SWIFTPLAY, actualGame.getGameMode());
         assertEquals(
-                Map.of("game mode", GameMode.SWIFTPLAY, "kills", 6, "deaths", 3, "assists", 4),
+                Map.of("kills", 6, "deaths", 3, "assists", 4),
                 actualGame.getStatValues());
     }
 

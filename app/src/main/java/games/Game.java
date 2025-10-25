@@ -8,28 +8,30 @@
 package games;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public abstract class Game {
+public abstract class Game<Mode extends Enum<Mode>> {
 
-    protected final Timestamp endTime;
+    protected Timestamp endTime;
+    protected final Mode gameMode;
     protected Map<String, Object> statValues;
     protected boolean win;
 
-    public Game() {
-        this.endTime = Timestamp.from(Instant.now());
+    public Game(Mode gameMode) {
+        this.gameMode = gameMode;
     }
 
     public Game(
             Timestamp endTime,
+            Mode gameMode,
             Map<String, Object> statValues,
             boolean win) {
         this.endTime = endTime;
+        this.gameMode = gameMode;
 
         if (!checkStatValues(statValues)) {
             throw new IllegalArgumentException("Given statValues: " + statValues.toString()
@@ -58,6 +60,10 @@ public abstract class Game {
 
     public Timestamp getEndTime() {
         return this.endTime;
+    }
+    
+    public Mode getGameMode() {
+        return this.gameMode;
     }
 
     public Map<String, Object> getStatValues() {

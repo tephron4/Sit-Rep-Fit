@@ -21,6 +21,7 @@ public class WorkoutTest {
     private Exercise exercise_1 = new Exercise("exercise_1", ExerciseType.REPS);
     private Exercise exercise_2 = new Exercise("exercise_2", ExerciseType.TIMED);
 
+    @SuppressWarnings("rawtypes")
     Game mockGame = mock(Game.class);
 
     private ExerciseTodo eTodo_1 = new ExerciseTodo(exercise_1, mockGame);

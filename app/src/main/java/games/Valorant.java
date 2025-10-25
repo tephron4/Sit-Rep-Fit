@@ -13,33 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Valorant extends Game {
-
-    public enum GameMode {
-        UNRATED("Unrated"),
-        COMPETITIVE("Competitive"),
-        SWIFTPLAY("Swiftplay"),
-        SPIKE_RUSH("Spike Rush"),
-        DEATHMATCH("Deathmatch"),
-        ESCALATION("Escalation"),
-        TEAM_DEATHMATCH("Team Deathmatch");
-
-        private final String displayString;
-
-        private GameMode(String displayString) {
-            this.displayString = displayString;
-        }
-
-        public String getDisplayString() {
-            return this.displayString;
-        }
-
-    }
+public class Valorant extends Game<ValorantGameMode> {
 
     @SuppressWarnings("rawtypes")
     private static LinkedHashMap<String, Class> stats = new LinkedHashMap<>() {
         {
-            put("game mode", GameMode.class);
             put("kills", Integer.class);
             put("deaths", Integer.class);
             put("assists", Integer.class);
@@ -52,30 +30,30 @@ public class Valorant extends Game {
     };
 
     public Valorant() {
-        super();
+        super(ValorantGameMode.UNKNOWN_MODE);
     }
 
-    public Valorant(Timestamp endTime, Map<String, Object> statValues, boolean win) {
-        super(endTime, statValues, win);
+    public Valorant(Timestamp endTime, ValorantGameMode gameMode, Map<String, Object> statValues, boolean win) {
+        super(endTime, gameMode, statValues, win);
     }
 
     @Override
     public int calculateReps() {
-        GameMode gm = (GameMode) this.getStatValue("game mode");
+        ValorantGameMode gm = (ValorantGameMode) this.getGameMode();
         switch (gm) {
-            case UNRATED:
+            case ValorantGameMode.UNRATED:
                 return this.getUnratedReps();
-            case COMPETITIVE:
+            case ValorantGameMode.COMPETITIVE:
                 return this.getCompetitiveReps();
-            case SWIFTPLAY:
+            case ValorantGameMode.SWIFTPLAY:
                 return this.getSwiftplayReps();
-            case SPIKE_RUSH:
+            case ValorantGameMode.SPIKE_RUSH:
                 return this.getSpikeRushReps();
-            case DEATHMATCH:
+            case ValorantGameMode.DEATHMATCH:
                 return this.getDeathmatchReps();
-            case ESCALATION:
+            case ValorantGameMode.ESCALATION:
                 return this.getEscalationReps();
-            case TEAM_DEATHMATCH:
+            case ValorantGameMode.TEAM_DEATHMATCH:
                 return this.getTeamDeathmatchReps();
             default:
                 return -1;
