@@ -36,10 +36,6 @@ public class MarvelRivals extends Game<MarvelRivalsMode> {
     public int calculateReps() {
         int deaths = (int) this.statValues.get("deaths");
 
-        if (deaths < 0) {
-            throw new IllegalArgumentException("Deaths (" + deaths + ") cannot be negative");
-        }
-
         return (deaths == 0 ? 1 : deaths) * (this.win ? 1 : 2);
     }
 
