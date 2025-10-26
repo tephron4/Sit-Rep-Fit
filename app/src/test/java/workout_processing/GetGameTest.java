@@ -151,7 +151,26 @@ public class GetGameTest {
 
         Game actualGame = getGame.getGame();
 
-        String invalidInput = "Please enter an integer value";
+        String invalidInput = "Please enter a non-negative integer value";
+
+        // Check that it caught the invalid input
+        assertTrue(outputStream.toString().contains(invalidInput));
+        // Check that the game was still retrieved correctly
+        assertNotNull(actualGame.getEndTime());
+        assertTrue(actualGame.getWin());
+        assertEquals(Map.of("kills", 25, "deaths", 7, "assists", 10), actualGame.getStatValues());
+    }
+
+    @Test
+    public void handlesNegativeIntInput() {
+        String input = "1\ny\n-13\n25\n7\n10";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+
+        GetGame getGame = new GetGame(new Scanner(in));
+
+        Game actualGame = getGame.getGame();
+
+        String invalidInput = "Please enter a non-negative integer value";
 
         // Check that it caught the invalid input
         assertTrue(outputStream.toString().contains(invalidInput));
@@ -170,7 +189,7 @@ public class GetGameTest {
 
         Game actualGame = getGame.getGame();
 
-        String invalidInput = "Please enter an integer value";
+        String invalidInput = "Please enter a non-negative integer value";
 
         // Check that it caught the invalid input
         assertTrue(outputStream.toString().contains(invalidInput));

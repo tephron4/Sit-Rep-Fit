@@ -213,10 +213,18 @@ public class GetGame {
             System.out.println("\n\nWhat did you get for " + stat + "?");
             String resp = this.sc.nextLine().strip();
 
+            int statInt = -1;
             try {
-                return Integer.parseInt(resp);
+                statInt = Integer.parseInt(resp);
             } catch (NumberFormatException | NullPointerException e) {
-                System.out.println("\nPlease enter an integer value");
+                System.out.println("\nPlease enter a non-negative integer value");
+                continue;
+            }
+
+            if (statInt >= 0) {
+                return statInt;
+            } else {
+                System.out.println("\nPlease enter a non-negative integer value");
                 continue;
             }
         }
