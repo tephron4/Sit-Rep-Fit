@@ -23,11 +23,20 @@ dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
 
+    // Database dependencies
+    implementation("org.hibernate.orm:hibernate-core:7.1.4.Final") // JPA Implementation (Hibernate Core)
+    implementation("org.xerial:sqlite-jdbc:3.50.3.0") // Database Driver (SQLite)
+    implementation("jakarta.persistence:jakarta.persistence-api:3.2.0") // JPA Annotations
+
+    // Add support for JUnit (testing)
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.13.4")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.13.4")
     testImplementation("org.junit.platform:junit-platform-launcher:1.13.4")
+
+    // Add support for parameterized tests
     testImplementation("org.junit.jupiter:junit-jupiter-params:6.0.0")
 
+    // Add support for mocking classes in tests
     testImplementation(libs.mockito)
     mockitoAgent(libs.mockito) { isTransitive = false }
 }
