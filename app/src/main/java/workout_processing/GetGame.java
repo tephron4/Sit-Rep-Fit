@@ -50,6 +50,7 @@ public class GetGame {
             System.out.println("--------------------------------");
             System.out.println("| 1............. Marvel Rivals |");
             System.out.println("| 2.................. Valorant |");
+            System.out.println("| 3......... League of Legends |");
             System.out.println("|                              |");
             System.out.println("|      (more coming soon)      |");
             System.out.println("--------------------------------");
@@ -70,6 +71,9 @@ public class GetGame {
                     continue;
                 case 2:
                     chosenClass = Valorant.class;
+                    continue;
+                case 3:
+                    chosenClass = games.LeagueOfLegends.class;
                     continue;
                 default:
                     System.out.println("\n\nPlease select an option from the given list\n\n");
